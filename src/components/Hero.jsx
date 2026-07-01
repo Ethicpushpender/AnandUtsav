@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-scroll";
 import BookingForm from "./BookingForm";
-import mainImage from "../assets/mainImage.jpeg";
+import mainImage from "../assets/mainImage.webp";
 import topImage from "../assets/topImage.jpeg";
 import bottomImage from "../assets/bottomImage.jpeg";
 import {

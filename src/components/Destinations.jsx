@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import Vrindavan from "../assets/Vrindavan.PNG";
+import Vrindavan from "../assets/Vrindavan.webp";
 import ayodiya from "../assets/ayodiya.webp";
-import Jagannath from "../assets/Jagannath.jpg";
+import Jagannath from "../assets/Jagannath.webp";
 import Haridwar from "../assets/Haridwar.jpg";
 import Rishikesh from "../assets/Rishikesh.webp";
 import badrinath from "../assets/badrinath.webp";
