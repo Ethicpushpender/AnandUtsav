@@ -94,6 +94,7 @@ const Testimonials = () => {
                   src={item.img}
                   alt={item.name}
                   className="w-16 h-16 rounded-xl object-cover border border-gray-200 shadow"
+                  loading="lazy"
                 />
 
                 <div>

@@ -50,6 +50,7 @@ const Footer = () => {
             src={logo}
             alt="AnandUtsav Logo"
             className="w-44 md:w-52 h-auto mb-6"
+            loading="lazy"
           />
 
           <p className="text-gray-300 text-[15px] leading-8 mb-8">

@@ -9,6 +9,10 @@
   --cream: #FFF6EE;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body{
   font-family: Helvetica;
   background: white;

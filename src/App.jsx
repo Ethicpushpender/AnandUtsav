@@ -1,13 +1,22 @@
+import { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Services from "./components/Services";
-import Destinations from "./components/Destinations";
-import WhyChoose from "./components/WhyChoose";
-import Testimonials from "./components/Testimonials";
-import Footer from "./components/Footer";
-import WhatsAppButton from "./components/WhatsAppButton";
-import CallToAction from "./components/CallToAction";
 
+// Lazy load below-the-fold components
+const Services = lazy(() => import("./components/Services"));
+const Destinations = lazy(() => import("./components/Destinations"));
+const WhyChoose = lazy(() => import("./components/WhyChoose"));
+const Footer = lazy(() => import("./components/Footer"));
+const WhatsAppButton = lazy(() => import("./components/WhatsAppButton"));
+
+const SectionLoader = () => (
+  <div
+    className="flex items-center justify-center min-h-[300px] w-full"
+    aria-label="Loading section"
+  >
+    <div className="w-8 h-8 border-4 border-t-transparent border-[#F78F30] rounded-full animate-spin"></div>
+  </div>
+);
 
 function App() {
   return (
@@ -19,23 +28,32 @@ function App() {
       </section>
 
       <section id="tours">
-        <Services />
+        <Suspense fallback={<SectionLoader />}>
+          <Services />
+        </Suspense>
       </section>
 
       <section id="destinations">
-        <Destinations />
+        <Suspense fallback={<SectionLoader />}>
+          <Destinations />
+        </Suspense>
       </section>
 
       <section id="about">
-        <WhyChoose />
+        <Suspense fallback={<SectionLoader />}>
+          <WhyChoose />
+        </Suspense>
       </section>
 
-      {/* <CallToAction /> */}
       <section id="contact">
-        <Footer />
+        <Suspense fallback={<SectionLoader />}>
+          <Footer />
+        </Suspense>
       </section>
 
-      <WhatsAppButton />
+      <Suspense fallback={null}>
+        <WhatsAppButton />
+      </Suspense>
 
       {/* <Footer /> */}
     </>

@@ -1,22 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-scroll";
 import logo from "../assets/logo.webp";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // State for hamburger menu
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const [activeSection, setActiveSection] = useState("home");
 
   const menuItems = [
     { name: "Home", to: "home" },
@@ -25,6 +13,41 @@ const Navbar = () => {
     { name: "About", to: "about" },
     { name: "Contact", to: "contact" },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Intersection observer to track current active section on the page
+    const sections = menuItems.map(item => document.getElementById(item.to));
+    const observerOptions = {
+      root: null,
+      rootMargin: "-30% 0px -60% 0px",
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      sections.forEach((section) => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
 
   return (
     <nav
@@ -47,17 +70,14 @@ const Navbar = () => {
         <ul className="hidden lg:flex items-center gap-6 xl:gap-10 font-medium">
           {menuItems.map((item) => (
             <li key={item.to}>
-              <Link
-                to={item.to}
-                spy={true}
-                smooth={true}
-                duration={600}
-                offset={-90}
-                activeClass="active-link"
-                className="cursor-pointer relative text-[#0E1238] hover:text-[#F78F30] transition-colors whitespace-nowrap"
+              <a
+                href={`#${item.to}`}
+                className={`cursor-pointer relative text-[#0E1238] hover:text-[#F78F30] transition-colors whitespace-nowrap ${
+                  activeSection === item.to ? "active-link" : ""
+                }`}
               >
                 {item.name}
-              </Link>
+              </a>
             </li>
           ))}
         </ul>
@@ -105,18 +125,15 @@ const Navbar = () => {
         <ul className="flex flex-col items-center gap-6 font-medium">
           {menuItems.map((item) => (
             <li key={item.to}>
-              <Link
-                to={item.to}
-                spy={true}
-                smooth={true}
-                duration={600}
-                offset={-90}
-                activeClass="active-link"
+              <a
+                href={`#${item.to}`}
                 onClick={() => setIsOpen(false)} // Close menu on click
-                className="cursor-pointer relative text-[#0E1238] hover:text-[#F78F30] transition-colors text-lg"
+                className={`cursor-pointer relative text-[#0E1238] hover:text-[#F78F30] transition-colors text-lg ${
+                  activeSection === item.to ? "active-link" : ""
+                }`}
               >
                 {item.name}
-              </Link>
+              </a>
             </li>
           ))}
           
